@@ -110,6 +110,7 @@
                                 valueHelpRequest=".onSelectDialogRequested"
                                 showValueHelp="true"
                                 change=".onCandidateIdChange" />
+                                <!-- change=".onCandidateIdChange" /> -->
                             <Input 
                                 id="workLocationCell" 
                                 value="{jobApplicants>workLocation}" 
