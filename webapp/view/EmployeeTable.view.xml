@@ -1,0 +1,136 @@
+<mvc:View 
+    controllerName="input.in.table.row.tasks.ui5.ui5inputintablerowtask2.controller.EmployeeTable"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:p13n="sap.m.p13n"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Page id="page" showHeader="false" showSubHeader="false">
+        <core:Fragment fragmentName="input.in.table.row.tasks.ui5.ui5inputintablerowtask2.view.fragments.TopBar" type="XML"/>
+        <content>
+            <fb:FilterBar id="filterBar" search=".onSearch" header="{i18n>candidateTableFilterBarHeading}" visible="true">
+                <fb:filterGroupItems>
+                    <fb:FilterGroupItem 
+                        id="jobIdFilterGroupItem"
+                        visibleInFilterBar="true"
+                        name="jobId"
+                        label="Job ID"
+                        groupName="Group1">
+                        <fb:control>
+                            <Input id="jobIdSearchField" width="100%"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem 
+                        id="candidateIdFilterGroupItem"
+                        visibleInFilterBar="true"
+                        name="candidateId"
+                        label="Candidate ID"
+                        groupName="Group1">
+                        <fb:control>
+                            <Input id="candidateIdSearchField"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem 
+                        id="workLocationFilterGroupItem"
+                        visibleInFilterBar="true"
+                        name="workLocation"
+                        label="Work Location"
+                        groupName="Group1">
+                        <fb:control>
+                            <Input id="workLocationSearchField"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem 
+                        id="skillsFilterGroupItem"
+                        visibleInFilterBar="true"
+                        name="skills"
+                        label="Skills"
+                        groupName="Group1">
+                        <fb:control>
+                            <Input id="skillsSearchField"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                </fb:filterGroupItems>
+            </fb:FilterBar>
+
+            <Table 
+                id="candidateTable" 
+                width="auto"
+                items="{
+                    path: 'jobApplicants>/Table',
+                    templateShareable: false
+                }">
+                <headerToolbar>
+                    <Toolbar id="tableHeaderToolbar">
+                        <Title id="candidateTableTitle" text="{i18n>candidateTableTitle}"/>
+                        <ToolbarSpacer id="toolBarSpacer" />
+                        <Button id="addRowButton" icon="sap-icon://add" text="Add Row" press=".onAddRow"/>
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column id="serialNumberColumn" app:p13nKey="serialNumber_col">
+                        <Text id="serialNumberColHeader" text="Serial Number"/>
+                    </Column>
+
+                    <Column id="jobCodeColumn" app:p13nKey="jobCode_col">
+                        <Text id="jobCodeColHeader" text="Job Code"/>
+                    </Column>
+
+                    <Column id="candidateIdColumn" app:p13nKey="candidateId_col">
+                        <Text id="candidateIdColHeader" text="Candidate ID"/>
+                    </Column>
+
+                    <Column id="workLocationColumn" app:p13nKey="workLocation_col">
+                        <Text id="workLocationColHeader" text="Work Location"/>
+                    </Column>
+
+                    <Column id="skillsColumn" app:p13nKey="skills_col">
+                        <Text id="skillsColHeader" text="Skills"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem id="columnListItem" press=".onRowPress" type="Navigation">
+                        <cells>
+                            <Text id="serialNumberCell" text="{jobApplicants>serialNumber}"/>
+                            <ComboBox 
+                                id="jobCodeCell" 
+                                editable="true"
+                                selectedKey=""
+                                change=".onJobCodeChange">
+                                <items>
+                                    <core:ListItem id="j12ListItem" key="J12" text="J12"/>
+                                    <core:ListItem id="j34ListItem" key="J34" text="J34"/>
+                                </items>
+                            </ComboBox>
+                            <Input 
+                                id="candidateIdCell" 
+                                value="{jobApplicants>candidateId}" 
+                                editable="{jobApplicants>editableCandidateId}"
+                                valueHelpRequest=".onSelectDialogRequested"
+                                showValueHelp="true"
+                                change=".onCandidateIdChange" />
+                            <Input 
+                                id="workLocationCell" 
+                                value="{jobApplicants>workLocation}" 
+                                editable="{jobApplicants>editableWorkLocation}"
+                                valueHelpRequest=".onSelectDialogRequested"
+                                showValueHelp="true"
+                                change=".onWorkLocationChange" />
+                            <MultiComboBox 
+                                id="skillsCell"
+                                editable="{jobApplicants>editableSkills}"
+                                items="{
+                                    path: 'jobApplicants>/uniqueSkills'
+                                }">
+                                <core:ListItem id="skillsCellListItem" key="{jobApplicants>skill}" text="{jobApplicants>skill}"/>
+                            </MultiComboBox>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+            <Button id="submitBtn" text="Submit" press=".onSubmit" class="sapUiTinyMarginTop sapUiTinyMarginRight" visible="false"/>
+            <Button id="cancelBtn" text="Cancel" press=".onCancel" class="sapUiTinyMarginTop  sapUiTinyMarginLeft" visible="false"/>
+        </content>
+    </Page>
+</mvc:View>

@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		id="mySelectDialog"
+		noDataText="No Values Found"
+		title="Select a value"
+		confirm=".onSelectDialogConfirm"
+		cancel=".onDialogCancel"
+		items="{
+			path: 'jobApplicants>/activeDialogItems'
+		}">
+		<StandardListItem
+			id="selectDialogFragmentStandardListItem"
+			title="{jobApplicants>title}"
+			description="{jobApplicants>description}" />
+	</SelectDialog>
+</core:FragmentDefinition>

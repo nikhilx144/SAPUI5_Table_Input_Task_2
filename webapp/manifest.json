@@ -1,0 +1,128 @@
+{
+  "_version": "1.85.0",
+  "sap.app": {
+    "id": "input.in.table.row.tasks.ui5.ui5inputintablerowtask2",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.25.0",
+      "toolsId": "481c6c43-a4f5-4a14-87f0-d6ca3332f134"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.148.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "input.in.table.row.tasks.ui5.ui5inputintablerowtask2.i18n.i18n"
+        }
+      },
+      "jobApplicants": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/jobApplicants.json"
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "input.in.table.row.tasks.ui5.ui5inputintablerowtask2.view",
+        "async": true,
+        "viewPath": "input.in.table.row.tasks.ui5.ui5inputintablerowtask2.view"
+      },
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "RouteEmployeeTable",
+          "target": [
+            "TargetEmployeeTable"
+          ]
+        },
+        {
+          "pattern": "object/{id}",
+          "name": "ObjectPage",
+          "target": [
+            "TargetObjectPage"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetEmployeeTable": {
+          "id": "EmployeeTable",
+          "name": "EmployeeTable"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "input.in.table.row.tasks.ui5.ui5inputintablerowtask2.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

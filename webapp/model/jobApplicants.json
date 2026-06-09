@@ -1,0 +1,230 @@
+{   
+    "ValueHelper": [
+        {
+            "jobCode": "J12",
+            "candidateId": "C1",
+            "workLocation": "C1-L1",
+            "skills": ["Java", "Python", "UI5"]
+        },
+        {
+            "jobCode": "J12",
+            "candidateId": "C1",
+            "workLocation": "C1-L2",
+            "skills": ["Java", "Python", "UI5"]
+        },
+        {
+            "jobCode": "J12",
+            "candidateId": "C2",
+            "workLocation": "C2-L1",
+            "skills": ["Javascript", "React", "Node.js"]
+        },
+        {
+            "jobCode": "J12",
+            "candidateId": "C2",
+            "workLocation": "C2-L2",
+            "skills": ["Javascript", "React", "Node.js"]
+        },
+        {
+            "jobCode": "J34",
+            "candidateId": "C3",
+            "workLocation": "C3-L1",
+            "skills": ["Spring Boot", "Microservices"]
+        },
+        {
+            "jobCode": "J34",
+            "candidateId": "C4",
+            "workLocation": "C4-L1",
+            "skills": ["K8s", "Docker"]
+        },
+        {
+            "jobCode": "J34",
+            "candidateId": "C4",
+            "workLocation": "C4-L2",
+            "skills": ["K8s", "Docker"]
+        }
+    ],
+
+    "Table": [],
+
+    "uniqueSkills": [
+        {
+            "skill": "Java"
+        },
+        {
+            "skill": "Python"
+        },
+        {
+            "skill": "UI5"
+        },
+        {
+            "skill": "JavaScript"
+        },
+        {
+            "skill": "React"
+        },
+        {
+            "skill": "Node.js"
+        },
+        {
+            "skill": "Spring Boot"
+        },
+        {
+            "skill": "Microservices"
+        },
+        {
+            "skill": "K8s"
+        },
+        {
+            "skill": "Docker"
+        }
+    ],
+
+    "uniqueJobCodes": [
+        {
+            "title": "J12",
+            "description": "Job 12",
+            "candidates": [
+                {
+                    "title": "C1",
+                    "description": "C1 Name"
+                },
+                {
+                    "title": "C2",
+                    "description": "C2 Name"
+                }
+            ]
+        },
+        {
+            "title": "J34",
+            "description": "Job 34",
+            "candidates": [
+                {
+                    "title": "C3",
+                    "description": "C3 Name"
+                },
+                {
+                    "title": "C4",
+                    "description": "C4 Name"
+                }
+            ]
+        }
+    ],
+
+    "uniqueCandidateCodesAndNames": [
+        {
+            "title": "C1",
+            "description": "C1 Name",
+            "workLocations": [
+                {
+                    "title": "C1-L1",
+                    "description": "C1 Location 1"
+                },
+                {
+                    "title": "C1-L2",
+                    "description": "C1 Location 2"
+                }
+            ]
+        },
+        {
+             "title": "C2",
+            "description": "C2 Name",
+            "workLocations": [
+                {
+                    "title": "C2-L1",
+                    "description": "C2 Location 1"
+                },
+                {
+                    "title": "C2-L2",
+                    "description": "C2 Location 2"
+                }
+            ]
+        },
+        {
+             "title": "C3",
+            "description": "C3 Name",
+            "workLocations": [
+                {
+                    "title": "C3-L1",
+                    "description": "C3 Location 1"
+                },
+                {
+                    "title": "C3-L2",
+                    "description": "C3 Location 2"
+                }
+            ]
+        },
+        {
+             "title": "C4",
+            "description": "C4 Name",
+            "workLocations": [
+                {
+                    "title": "C4-L1",
+                    "description": "C4 Location 1"
+                },
+                {
+                    "title": "C4-L2",
+                    "description": "C4 Location 2"
+                }
+            ]
+        }
+    ],
+
+    "uniqueWorkLocations": [
+        {
+            "title": "C1-L1",
+            "description": "C1 Location 1"
+        },
+        {
+            "title": "C1-L2",
+            "description": "C1 Location 2"
+        },
+        {
+            "title": "C2-L1",
+            "description": "C2 Location 1"
+        },
+        {
+            "title": "C2-L2",
+            "description": "C2 Location 2"
+        },
+        {
+            "title": "C3-L1",
+            "description": "C3 Location 1"
+        },
+        {
+            "title": "C3-L2",
+            "description": "C3 Location 2"
+        },
+        {
+            "title": "C4-L1",
+            "description": "C4 Location 1"
+        },
+        {
+            "title": "C4-L2",
+            "description": "C4 Location 2"
+        }
+    ],
+
+    "activeDialogItems": [],
+
+    "editable": false,
+
+    "candidateIdEditable": false,
+
+    "workLocationEditable": false,
+
+    "selectedCandidate": null,
+
+    "selectedCandidateData": {},
+
+    "newEntry": {
+        "jobCode": "",
+        "candidateId": "",
+        "workLocation": "",
+        "skills": [],
+        "editableRow": true,
+        "editableCandidateId": false,
+        "editableWorkLocation": false,
+        "editableSkills": false,
+        "serialNumber": -1
+    }
+}
