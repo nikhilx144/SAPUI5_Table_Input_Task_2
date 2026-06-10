@@ -21,21 +21,38 @@ sap.ui.define([
             this.selectedCandidateId = null;
         },
 
+        onEmpButtonPress() {
+            const oButton = this.oView.byId("employeesButton");
+            if (!this._empPopOver) {
+                this._empPopOver = Fragment.load({
+                    name: "input.in.table.row.tasks.ui5.ui5inputintablerowtask2.view.fragments.PopOver",
+                    controller: this
+                }).then(oPopover => {
+                    this.oView.addDependent(oPopover);
+                    return oPopover;
+                });
+            }
+            this._empPopOver.then(oPopover => {
+                oPopover.openBy(oButton);
+            });
+        },
+
         onAddRow() {
             const candidateData = this.oModel.getProperty("/Table");
             if (this.addRowCounter === 0) this.lastEntryIndex = candidateData.length - 1;
             this.addRowCounter++;
-            this.oView.byId("submitBtn").setVisible(true);
+            this.oView.byId("saveBtn").setVisible(true);
             this.oView.byId("cancelBtn").setVisible(true);
             this.oModel.setProperty("/newEntry", {
                 jobCode: "",
                 candidateId: "",
                 workLocation: "",
                 skills: [],
-                editableRow: true,
+                editableJobCode: true,
                 editableCandidateId: false,
                 editableWorkLocation: false,
                 editableSkills: false,
+                editButtonVisible: false,
                 serialNumber: this.serialNumber + this.addRowCounter
             });
             candidateData.push(this.oModel.getProperty("/newEntry"));
@@ -44,14 +61,35 @@ sap.ui.define([
             
         },
 
-        onSubmit() {
+        
+        onDeleteRow(oEvent) {
+            const bindingContext = oEvent.getSource().getBindingContext("jobApplicants");
+            const rowPath = bindingContext.getPath();
+            const rowIndex = parseInt(rowPath.split("/").pop());
+            const candidateTableData = this.oModel.getProperty("/Table");
+            candidateTableData.splice(rowIndex, 1);
+            this.oModel.setProperty("/Table", candidateTableData);
+        },
+
+        onEditRow(oEvent) {
+            const bindingContext = oEvent.getSource().getBindingContext("jobApplicants");
+            const rowPath = bindingContext.getPath();
+            // this.oModel.setProperty(rowPath + "/editableCandidateId", true);
+            // this.oModel.setProperty(rowPath + "/editableWorkLocation", true);
+            // this.oModel.setProperty(rowPath + "/editableSkills", true);
+            this.oModel.setProperty(rowPath + "/editableJobCode", true);
+            this.oView.byId("saveBtn").setVisible(true);
+            this.oView.byId("cancelBtn").setVisible(true);
+        },
+
+        onSave() {
             const candidateTableData = this.oModel.getProperty("/Table");
             console.log(candidateTableData);
             for (let i= this.lastEntryIndex + 1; i < candidateTableData.length; i++) {
                 const entry = candidateTableData[i];
                 console.log(i, entry);
                 if (!entry.jobCode || !entry.candidateId || !entry.workLocation || !entry.skills.length) {
-                    alert("Please fill all the fields before submitting the data.");
+                    alert("Please fill all the fields before saving the data.");
                     return;
                 }
             }
@@ -59,10 +97,11 @@ sap.ui.define([
                 this.oModel.setProperty(`/Table/${i}/editableCandidateId`, false);
                 this.oModel.setProperty(`/Table/${i}/editableWorkLocation`, false);
                 this.oModel.setProperty(`/Table/${i}/editableSkills`, false);
-                this.oModel.setProperty(`/Table/${i}/editableJobCode`, false); // for job code editable
+                this.oModel.setProperty(`/Table/${i}/editableJobCode`, false);
                 this.oModel.setProperty(`/Table/${i}/serialNumber`, i + 1);
+                this.oModel.setProperty(`/Table/${i}/editButtonVisible`, true);
             }
-            this.oView.byId("submitBtn").setVisible(false);
+            this.oView.byId("saveBtn").setVisible(false);
             this.oView.byId("cancelBtn").setVisible(false);
             this.addRowCounter = 0;
             this.lastEntryIndex = -1;
@@ -76,7 +115,7 @@ sap.ui.define([
                 i--;
             }
             this.oModel.setProperty("/Table", candidateTableData);
-            this.oView.byId("submitBtn").setVisible(false);
+            this.oView.byId("saveBtn").setVisible(false);
             this.oView.byId("cancelBtn").setVisible(false);
             console.log(this.oModel);
             this.addRowCounter = 0;
@@ -177,15 +216,6 @@ sap.ui.define([
             const bindingContext = multiComboBox.getBindingContext("jobApplicants");
             const rowPath = bindingContext.getPath();
             this.oModel.setProperty(rowPath + "/skills", selectedSkills);
-        },
-
-        onDeleteRow(oEvent) {
-            const bindingContext = oEvent.getSource().getBindingContext("jobApplicants");
-            const rowPath = bindingContext.getPath();
-            const rowIndex = parseInt(rowPath.split("/").pop());
-            const candidateTableData = this.oModel.getProperty("/Table");
-            candidateTableData.splice(rowIndex, 1);
-            this.oModel.setProperty("/Table", candidateTableData);
         }
     });
 });

@@ -64,8 +64,9 @@
                 <headerToolbar>
                     <Toolbar id="tableHeaderToolbar">
                         <Title id="candidateTableTitle" text="{i18n>candidateTableTitle}"/>
-                        <ToolbarSpacer id="toolBarSpacer" />
+                        <ToolbarSpacer id="toolBarSpacer"/>
                         <Button id="addRowButton" icon="sap-icon://add" text="Add Row" press=".onAddRow"/>
+                        <Button id="employeesButton" icon="sap-icon://employee" text="Employees" press=".onEmpButtonPress"/>
                     </Toolbar>
                 </headerToolbar>
                 <columns>
@@ -89,8 +90,8 @@
                         <Text id="skillsColHeader" text="Skills"/>
                     </Column>
 
-                    <Column id="deleteColumn">
-                        <Text id="deleteButtonColHeader" text="Delete"/>
+                    <Column id="colControlsColumn" app:p13nKey="colControls_col">
+                        <Text id="colControlsColHeader" text="Column Controls"/>
                     </Column>
                 </columns>
                 <items>
@@ -100,7 +101,7 @@
                             <ComboBox 
                                 id="jobCodeCell" 
                                 editable="{jobApplicants>editableJobCode}"
-                                selectedKey=""
+                                selectedKey="{jobApplicants>jobCode}"
                                 change=".onJobCodeChange">
                                 <items>
                                     <core:ListItem id="j12ListItem" key="J12" text="J12"/>
@@ -125,17 +126,21 @@
                                 id="skillsCell"
                                 selectionChange=".onSkillsChange"
                                 editable="{jobApplicants>editableSkills}"
+                                selectedKeys="{jobApplicants>skills}"
                                 items="{
                                     path: 'jobApplicants>/uniqueSkills'
                                 }">
                                 <core:ListItem id="skillsCellListItem" key="{jobApplicants>skill}" text="{jobApplicants>skill}"/>
                             </MultiComboBox>
-                            <Button id="deleteButton" press=".onDeleteRow" icon="sap-icon://delete"/>
+                            <HBox id="colControlButtonsCell">
+                                <Button id="deleteButton" press=".onDeleteRow" icon="sap-icon://delete"/>
+                                <Button id="editButton" press=".onEditRow" icon="sap-icon://edit" visible="{jobApplicants>editButtonVisible}"/>
+                            </HBox>
                         </cells>
                     </ColumnListItem>
                 </items>
             </Table>
-            <Button id="submitBtn" text="Submit" press=".onSubmit" class="sapUiTinyMarginTop sapUiTinyMarginRight" visible="false"/>
+            <Button id="saveBtn" text="Save" press=".onSave" class="sapUiTinyMarginTop sapUiTinyMarginRight" visible="false"/>
             <Button id="cancelBtn" text="Cancel" press=".onCancel" class="sapUiTinyMarginTop  sapUiTinyMarginLeft" visible="false"/>
         </content>
     </Page>

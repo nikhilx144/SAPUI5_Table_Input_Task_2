@@ -1,0 +1,32 @@
+{
+    "employees": [
+        {
+            "empId": "101",
+            "empName": "Nikhil"
+        },
+        {
+            "empId": "102",
+            "empName": "Sharath"
+        },
+        {
+            "empId": "103",
+            "empName": "Raj Kumar"
+        },
+        {
+            "empId": "104",
+            "empName": "Syam"
+        },
+        {
+            "empId": "105",
+            "empName": "Ajay"
+        },
+        {
+            "empId": "106",
+            "empName": "Sunil"
+        },
+        {
+            "empId": "107",
+            "empName": "Manoj"
+        }
+    ]
+}
