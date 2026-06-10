@@ -221,7 +221,7 @@
         "candidateId": "",
         "workLocation": "",
         "skills": [],
-        "editableRow": true,
+        "editableJobCode": true,
         "editableCandidateId": false,
         "editableWorkLocation": false,
         "editableSkills": false,

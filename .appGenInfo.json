@@ -9,7 +9,7 @@
     "appTitle": "Input In Table Row Task 2",
     "appDescription": "Input in table row task 2, use different types of inputs along with value help",
     "appNamespace": "input.in.table.row.tasks.ui5",
-    "ui5Theme": "sap_horizon",
+    "ui5Theme": "sap_horizon_dark",
     "ui5Version": "1.148.1",
     "enableEslint": true,
     "enableTypeScript": false,

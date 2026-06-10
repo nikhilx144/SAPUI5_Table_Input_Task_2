@@ -3,8 +3,8 @@
 	xmlns:core="sap.ui.core">
 	<SelectDialog
 		id="mySelectDialog"
-		noDataText="No Values Found"
-		title="Select a value"
+		noDataText="{i18n>selectDialogNoDataText}"
+		title="{i18n>selectDialogTitle}"
 		confirm=".onSelectDialogConfirm"
 		cancel=".onSelectDialogCancel"
 		selectionChange=".onSelectionChange"

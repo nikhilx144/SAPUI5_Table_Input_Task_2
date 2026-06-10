@@ -59,7 +59,7 @@ sap.ui.define([
                 this.oModel.setProperty(`/Table/${i}/editableCandidateId`, false);
                 this.oModel.setProperty(`/Table/${i}/editableWorkLocation`, false);
                 this.oModel.setProperty(`/Table/${i}/editableSkills`, false);
-                this.oModel.setProperty(`/Table/${i}/editableRow`, false); // for job code editable
+                this.oModel.setProperty(`/Table/${i}/editableJobCode`, false); // for job code editable
                 this.oModel.setProperty(`/Table/${i}/serialNumber`, i + 1);
             }
             this.oView.byId("submitBtn").setVisible(false);

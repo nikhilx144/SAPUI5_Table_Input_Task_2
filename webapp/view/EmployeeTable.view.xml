@@ -99,7 +99,7 @@
                             <Text id="serialNumberCell" text="{jobApplicants>serialNumber}"/>
                             <ComboBox 
                                 id="jobCodeCell" 
-                                editable="{jobApplicants>editableRow}"
+                                editable="{jobApplicants>editableJobCode}"
                                 selectedKey=""
                                 change=".onJobCodeChange">
                                 <items>
@@ -114,7 +114,6 @@
                                 valueHelpRequest=".onSelectDialogRequested"
                                 showValueHelp="true"
                                 change=".onCandidateIdChange" />
-                                <!-- change=".onCandidateIdChange" /> -->
                             <Input 
                                 id="workLocationCell" 
                                 value="{jobApplicants>workLocation}" 
