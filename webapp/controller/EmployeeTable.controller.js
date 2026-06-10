@@ -16,6 +16,7 @@ sap.ui.define([
             this.candidateSelected = false;
             this.workLocationSelected = false;
             this.valueHelpControl = null;
+            this.valueHelpControlId = null;
             this.selectedJobCode = null;
             this.selectedCandidateId = null;
         },
@@ -97,7 +98,7 @@ sap.ui.define([
                 // let control;
                 const controlId = inputControl.getId();
                 if (controlId.includes("candidateIdCell")) {
-                    this.valueHelpControl = "candidateIdCell";
+                    this.valueHelpControlId = "candidateIdCell";
                     oDialog.setTitle('Select Candidate ID');
                     let jobCodes = this.oModel.getProperty("/uniqueJobCodes");
                     // control = this.oView.byId("candidateIdCell");
@@ -109,7 +110,7 @@ sap.ui.define([
                         }
                     }
                 } else if (controlId.includes("workLocationCell")) {
-                    this.valueHelpControl = "workLocationCell";
+                    this.valueHelpControlId = "workLocationCell";
                     oDialog.setTitle('Select Work Location');
                     let candidateIds = this.oModel.getProperty("/uniqueCandidateCodesAndNames");
                     for (let i = 0; i < candidateIds.length; i++) {
@@ -129,15 +130,15 @@ sap.ui.define([
             const bindingContext = this.valueHelpControl.getBindingContext("jobApplicants");
             console.log(bindingContext);
             const rowPath = bindingContext.getPath();
-            if (this.valueHelpControl === "candidateIdCell") {
-                this.oModel.setProperty(rowPath + "/editableCandidateId", true);
+            if (this.valueHelpControlId === "candidateIdCell") {
+                this.oModel.setProperty(rowPath + "/editableWorkLocation", true);
                 this.oModel.setProperty(rowPath + "/candidateId", selectedItemTitle);
                 // console.log(this.oModel.getProperty('/Table'));
                 this.oModel.setProperty(rowPath + "/workLocation", "");
                 this.oModel.setProperty(rowPath + "/skills", []);
                 this.oModel.setProperty(rowPath + "/editableSkills", false);
             }  
-            else if (this.valueHelpControl === "workLocationCell") {
+            else if (this.valueHelpControlId === "workLocationCell") {
                 this.oModel.setProperty(rowPath + "/editableSkills", true);
                 this.oModel.setProperty(rowPath + "/workLocation", selectedItemTitle);
                 // console.log(this.oModel.getProperty('/Table'));
