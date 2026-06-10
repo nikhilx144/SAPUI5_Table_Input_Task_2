@@ -49,14 +49,17 @@ sap.ui.define([
             console.log(candidateTableData);
             for (let i= this.lastEntryIndex + 1; i < candidateTableData.length; i++) {
                 const entry = candidateTableData[i];
-                console.log(entry);
+                console.log(i, entry);
                 if (!entry.jobCode || !entry.candidateId || !entry.workLocation || !entry.skills.length) {
                     alert("Please fill all the fields before submitting the data.");
                     return;
                 }
             }
             for (let i = this.lastEntryIndex + 1; i < this.oModel.getProperty("/Table").length; i++) {
-                this.oModel.setProperty(`/Table/${i}/editableRow`, false);
+                this.oModel.setProperty(`/Table/${i}/editableCandidateId`, false);
+                this.oModel.setProperty(`/Table/${i}/editableWorkLocation`, false);
+                this.oModel.setProperty(`/Table/${i}/editableSkills`, false);
+                this.oModel.setProperty(`/Table/${i}/editableRow`, false); // for job code editable
                 this.oModel.setProperty(`/Table/${i}/serialNumber`, i + 1);
             }
             this.oView.byId("submitBtn").setVisible(false);
@@ -133,16 +136,19 @@ sap.ui.define([
             if (this.valueHelpControlId === "candidateIdCell") {
                 this.oModel.setProperty(rowPath + "/editableWorkLocation", true);
                 this.oModel.setProperty(rowPath + "/candidateId", selectedItemTitle);
-                // console.log(this.oModel.getProperty('/Table'));
                 this.oModel.setProperty(rowPath + "/workLocation", "");
                 this.oModel.setProperty(rowPath + "/skills", []);
                 this.oModel.setProperty(rowPath + "/editableSkills", false);
+                this.selectedCandidateId = selectedItemTitle;
             }  
             else if (this.valueHelpControlId === "workLocationCell") {
                 this.oModel.setProperty(rowPath + "/editableSkills", true);
                 this.oModel.setProperty(rowPath + "/workLocation", selectedItemTitle);
-                // console.log(this.oModel.getProperty('/Table'));
             }
+        },
+
+        onSelectDialogCancel(oEvent) {
+            oEvent.getSource().close();
         },
 
         onJobCodeChange(oEvent) {
@@ -153,6 +159,7 @@ sap.ui.define([
             this.selectedJobCode = selectedJobCode;
             if (selectedJobCode) {
                 this.oModel.setProperty(rowPath + "/editableCandidateId", true);
+                this.oModel.setProperty(rowPath + "/jobCode", selectedJobCode);
             } else {
                 this.oModel.setProperty(rowPath + "/editableCandidateId", false);
             }
@@ -163,38 +170,22 @@ sap.ui.define([
             this.oModel.setProperty(rowPath + "/editableSkills", false);
         },
 
-        onSelectDialogCancel(oEvent) {
-            oEvent.getSource().close();
-        }
+        onSkillsChange(oEvent) {
+            const multiComboBox = oEvent.getSource();
+            const selectedItems = multiComboBox.getSelectedItems();
+            const selectedSkills = selectedItems.map(item => item.getText());
+            const bindingContext = multiComboBox.getBindingContext("jobApplicants");
+            const rowPath = bindingContext.getPath();
+            this.oModel.setProperty(rowPath + "/skills", selectedSkills);
+        },
 
-        // onSelectionChange(oEvent) {
-        //     if (this.valueHelpControl === "candidateIdCell") {
-        //         const serialNumber = oEvent.getSource().getBindingContext("jobApplicants").getProperty("serialNumber");
-        //         const selectedCandidateId = oEvent.getParameter("selectedItem").getTitle();
-        //         this.selectedCandidateId = selectedCandidateId;
-        //         this.oView.byId("workLocationCell").setValue("");
-        //         if (selectedCandidateId) {
-        //             this.oModel.setProperty(`/Table/${serialNumber - 1}/editableWorkLocation`, true);
-        //         }
-        //     } else if (this.valueHelpControl === "workLocationCell") {
-        //         const serialNumber = oEvent.getSource().getBindingContext("jobApplicants").getProperty("serialNumber");
-        //         const selectedWorkLocation = oEvent.getParameter("selectedItem").getTitle();
-        //         this.oView.byId("skillsCell").setValue("");
-        //         if (selectedWorkLocation) {
-        //             this.oModel.setProperty(`/Table/${serialNumber - 1}/editableSkills`, true);
-        //         }
-        //     }
-            // console.log("Candidate changed");
-            // console.log(oEvent.getSource());
-            // const bindingContext = oEvent.getSource().getBindingContext("jobApplicants");
-            // console.log(bindingContext);
-            // const selectedCandidateId = oEvent.getSource().getSelectedKey();
-            // console.log(selectedCandidateId);
-            // this.selectedCandidateId = selectedCandidateId;
-            // console.log(this.selectedCandidateId);
-            // if (selectedCandidateId) {
-            //     this.oModel.setProperty(`/Table/${serialNumber - 1}/editableWorkLocation`, true);
-            // }
-        // }
+        onDeleteRow(oEvent) {
+            const bindingContext = oEvent.getSource().getBindingContext("jobApplicants");
+            const rowPath = bindingContext.getPath();
+            const rowIndex = parseInt(rowPath.split("/").pop());
+            const candidateTableData = this.oModel.getProperty("/Table");
+            candidateTableData.splice(rowIndex, 1);
+            this.oModel.setProperty("/Table", candidateTableData);
+        }
     });
 });
