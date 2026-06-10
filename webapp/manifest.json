@@ -96,8 +96,7 @@
         "type": "View",
         "viewType": "XML",
         "path": "input.in.table.row.tasks.ui5.ui5inputintablerowtask2.view",
-        "async": true,
-        "viewPath": "input.in.table.row.tasks.ui5.ui5inputintablerowtask2.view"
+        "async": true
       },
       "routes": [
         {
@@ -109,16 +108,29 @@
         },
         {
           "pattern": "object/{id}",
-          "name": "ObjectPage",
+          "name": "RouteObject",
           "target": [
-            "TargetObjectPage"
+            "TargetObject"
+          ]
+        },
+        {
+          "pattern": "empDetailsForm",
+          "name": "RouteEmployeeForm",
+          "target": [
+            "TargetEmployeeForm"
           ]
         }
       ],
       "targets": {
         "TargetEmployeeTable": {
           "id": "EmployeeTable",
-          "name": "EmployeeTable"
+          "name": "EmployeeTable",
+          "level": 1
+        },
+        "TargetEmployeeForm": {
+          "id": "EmployeeDetailsForm",
+          "name": "EmployeeDetailsForm",
+          "level": 2
         }
       }
     },

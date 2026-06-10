@@ -1,0 +1,29 @@
+<mvc:View 
+    controllerName="input.in.table.row.tasks.ui5.ui5inputintablerowtask2.controller.EmployeeDetailsForm"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns:form="sap.ui.layout.form">
+    <Page id="empDetailsFormPage" title="Employee Details Form Page" showNavButton="true" navButtonPress=".onNavBack">
+        <form:SimpleForm 
+            id="form"
+            editable="true">
+            <form:content>
+                <Label id="empIdLabel" text="Employee ID"/>
+                <Input id="empIdInput" />
+
+                <Label id="empNameLabel" text="Employee Name"/>
+                <Input id="empNameInput" />
+                
+                <Label id="phnoLabel" text="Phone Number"/>
+                <Input id="phnoInput" />
+                
+                <Label id="emailLabel" text="Email"/>
+                <Input id="emailInput" />
+                
+                <Label id="ageLabel" text="Age"/>
+                <Input id="ageInput" />
+            </form:content>
+        </form:SimpleForm>
+        <Button id="submitButton" text="Submit" press=".onSubmit"/>
+    </Page>
+</mvc:View>

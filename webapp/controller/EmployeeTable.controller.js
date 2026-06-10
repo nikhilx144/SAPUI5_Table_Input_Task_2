@@ -1,9 +1,8 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/Fragment",
-    "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], (Controller, Fragment, Filter, FilterOperator) => {
+    "sap/ui/core/UIComponent"
+], (Controller, Fragment, UIComponent) => {
     "use strict";
 
     return Controller.extend("input.in.table.row.tasks.ui5.ui5inputintablerowtask2.controller.EmployeeTable", {
@@ -19,6 +18,11 @@ sap.ui.define([
             this.valueHelpControlId = null;
             this.selectedJobCode = null;
             this.selectedCandidateId = null;
+        },
+
+        onEmpDetailFormNavButtonPress(oEvent) {
+            const router = UIComponent.getRouterFor(this);
+            router.navTo("RouteEmployeeForm");
         },
 
         onEmpButtonPress() {

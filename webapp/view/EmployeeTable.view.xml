@@ -6,7 +6,7 @@
     xmlns:fb="sap.ui.comp.filterbar"
     xmlns:p13n="sap.m.p13n"
     xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
-    <Page id="page" showHeader="false" showSubHeader="false">
+    <Page id="employeeTablePage" showHeader="false" showSubHeader="false">
         <core:Fragment fragmentName="input.in.table.row.tasks.ui5.ui5inputintablerowtask2.view.fragments.TopBar" type="XML"/>
         <content>
             <fb:FilterBar id="filterBar" search=".onSearch" header="{i18n>candidateTableFilterBarHeading}" visible="true">
@@ -65,6 +65,7 @@
                     <Toolbar id="tableHeaderToolbar">
                         <Title id="candidateTableTitle" text="{i18n>candidateTableTitle}"/>
                         <ToolbarSpacer id="toolBarSpacer"/>
+                        <Button id="formPageNavButton" icon="sap-icon://form" text="Add Employee Details" press="onEmpDetailFormNavButtonPress" />
                         <Button id="addRowButton" icon="sap-icon://add" text="Add Row" press=".onAddRow"/>
                         <Button id="employeesButton" icon="sap-icon://employee" text="Employees" press=".onEmpButtonPress"/>
                     </Toolbar>
