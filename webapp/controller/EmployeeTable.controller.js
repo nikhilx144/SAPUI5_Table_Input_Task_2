@@ -80,7 +80,9 @@ sap.ui.define([
         },
 
         onSelectDialogRequested(oEvent) {
+            const inputControl = oEvent.getSource();
             this.serialNumber = oEvent.getSource().getBindingContext("jobApplicants").getProperty("serialNumber");
+            this.valueHelpControl = inputControl;
             if (!this._oSelectDialog) {
                 this._oSelectDialog = Fragment.load({
                     name: "input.in.table.row.tasks.ui5.ui5inputintablerowtask2.view.fragments.F4Help",
@@ -92,12 +94,13 @@ sap.ui.define([
             }
             
             this._oSelectDialog.then(oDialog => {
-                let control;
-                const controlId = oEvent.getSource().getId();
+                // let control;
+                const controlId = inputControl.getId();
                 if (controlId.includes("candidateIdCell")) {
                     this.valueHelpControl = "candidateIdCell";
-                    control = this.oView.byId("candidateIdCell");
+                    oDialog.setTitle('Select Candidate ID');
                     let jobCodes = this.oModel.getProperty("/uniqueJobCodes");
+                    // control = this.oView.byId("candidateIdCell");
                     for (let i = 0; i < jobCodes.length; i++) {
                         if (jobCodes[i].title === this.selectedJobCode) {
                             this.oModel.setProperty("/activeDialogItems", jobCodes[i].candidates);
@@ -105,17 +108,9 @@ sap.ui.define([
                             break;
                         }
                     }
-                }
-                return oDialog;
-            });
-
-            this._oSelectDialog.then(oDialog => {
-                let control;
-                const controlId = oEvent.getSource().getId();
-                if (controlId.includes("workLocationCell")) {
+                } else if (controlId.includes("workLocationCell")) {
                     this.valueHelpControl = "workLocationCell";
-                    this.candidateSelected = true;
-                    control = this.oView.byId("workLocationCell");
+                    oDialog.setTitle('Select Work Location');
                     let candidateIds = this.oModel.getProperty("/uniqueCandidateCodesAndNames");
                     for (let i = 0; i < candidateIds.length; i++) {
                         if (candidateIds[i].title === this.selectedCandidateId) {
@@ -125,57 +120,69 @@ sap.ui.define([
                         }
                     }
                 }
-                return oDialog;
-            });
-            
-            this._oSelectDialog.then(oDialog => {
-                // oDialog.setBindingContext(control.getBindingContext(), "jobApplicants");
                 oDialog.open();
             });
         },
 
         onSelectDialogConfirm(oEvent) {
             const selectedItemTitle = oEvent.getParameter("selectedItem").getTitle();
+            const bindingContext = this.valueHelpControl.getBindingContext("jobApplicants");
+            console.log(bindingContext);
+            const rowPath = bindingContext.getPath();
             if (this.valueHelpControl === "candidateIdCell") {
-                this.oModel.setProperty(`/Table/${this.serialNumber - 1}/editableWorkLocation`, true);
-                this.oModel.setProperty(`/Table/${this.serialNumber - 1}/candidateId`, selectedItemTitle);
-                console.log(this.oModel.getProperty('/Table'));
+                this.oModel.setProperty(rowPath + "/editableCandidateId", true);
+                this.oModel.setProperty(rowPath + "/candidateId", selectedItemTitle);
+                // console.log(this.oModel.getProperty('/Table'));
+                this.oModel.setProperty(rowPath + "/workLocation", "");
+                this.oModel.setProperty(rowPath + "/skills", []);
+                this.oModel.setProperty(rowPath + "/editableSkills", false);
             }  
             else if (this.valueHelpControl === "workLocationCell") {
-                this.oModel.setProperty(`/Table/${this.serialNumber - 1}/editableSkills`, true);
-                this.oModel.setProperty(`/Table/${this.serialNumber - 1}/workLocation`, selectedItemTitle);
-                console.log(this.oModel.getProperty('/Table'));
+                this.oModel.setProperty(rowPath + "/editableSkills", true);
+                this.oModel.setProperty(rowPath + "/workLocation", selectedItemTitle);
+                // console.log(this.oModel.getProperty('/Table'));
             }
         },
 
         onJobCodeChange(oEvent) {
-            const serialNumber = oEvent.getSource().getBindingContext("jobApplicants").getProperty("serialNumber");
-            const selectedJobCode = oEvent.getSource().getSelectedKey();
+            const comboBox = oEvent.getSource();
+            const bindingContext = comboBox.getBindingContext("jobApplicants");
+            const rowPath = bindingContext.getPath();
+            const selectedJobCode = comboBox.getSelectedKey();
             this.selectedJobCode = selectedJobCode;
-            this.oView.byId("candidateIdCell").setValue("");
-            this.oView.byId("workLocationCell").setValue("");
             if (selectedJobCode) {
-                this.oModel.setProperty(`/Table/${serialNumber - 1}/editableCandidateId`, true);
+                this.oModel.setProperty(rowPath + "/editableCandidateId", true);
+            } else {
+                this.oModel.setProperty(rowPath + "/editableCandidateId", false);
             }
+            this.oModel.setProperty(rowPath + "/candidateId", "");
+            this.oModel.setProperty(rowPath + "/workLocation", "");
+            this.oModel.setProperty(rowPath + "/skills", []);
+            this.oModel.setProperty(rowPath + "/editableWorkLocation", false);
+            this.oModel.setProperty(rowPath + "/editableSkills", false);
         },
 
-        onSelectionChange(oEvent) {
-            if (this.valueHelpControl === "candidateIdCell") {
-                const serialNumber = oEvent.getSource().getBindingContext("jobApplicants").getProperty("serialNumber");
-                const selectedCandidateId = oEvent.getParameter("selectedItem").getTitle();
-                this.selectedCandidateId = selectedCandidateId;
-                this.oView.byId("workLocationCell").setValue("");
-                if (selectedCandidateId) {
-                    this.oModel.setProperty(`/Table/${serialNumber - 1}/editableWorkLocation`, true);
-                }
-            } else if (this.valueHelpControl === "workLocationCell") {
-                const serialNumber = oEvent.getSource().getBindingContext("jobApplicants").getProperty("serialNumber");
-                const selectedWorkLocation = oEvent.getParameter("selectedItem").getTitle();
-                this.oView.byId("skillsCell").setValue("");
-                if (selectedWorkLocation) {
-                    this.oModel.setProperty(`/Table/${serialNumber - 1}/editableSkills`, true);
-                }
-            }
+        onSelectDialogCancel(oEvent) {
+            oEvent.getSource().close();
+        }
+
+        // onSelectionChange(oEvent) {
+        //     if (this.valueHelpControl === "candidateIdCell") {
+        //         const serialNumber = oEvent.getSource().getBindingContext("jobApplicants").getProperty("serialNumber");
+        //         const selectedCandidateId = oEvent.getParameter("selectedItem").getTitle();
+        //         this.selectedCandidateId = selectedCandidateId;
+        //         this.oView.byId("workLocationCell").setValue("");
+        //         if (selectedCandidateId) {
+        //             this.oModel.setProperty(`/Table/${serialNumber - 1}/editableWorkLocation`, true);
+        //         }
+        //     } else if (this.valueHelpControl === "workLocationCell") {
+        //         const serialNumber = oEvent.getSource().getBindingContext("jobApplicants").getProperty("serialNumber");
+        //         const selectedWorkLocation = oEvent.getParameter("selectedItem").getTitle();
+        //         this.oView.byId("skillsCell").setValue("");
+        //         if (selectedWorkLocation) {
+        //             this.oModel.setProperty(`/Table/${serialNumber - 1}/editableSkills`, true);
+        //         }
+        //     }
             // console.log("Candidate changed");
             // console.log(oEvent.getSource());
             // const bindingContext = oEvent.getSource().getBindingContext("jobApplicants");
@@ -187,6 +194,6 @@ sap.ui.define([
             // if (selectedCandidateId) {
             //     this.oModel.setProperty(`/Table/${serialNumber - 1}/editableWorkLocation`, true);
             // }
-        }
+        // }
     });
 });

@@ -6,7 +6,7 @@
 		noDataText="No Values Found"
 		title="Select a value"
 		confirm=".onSelectDialogConfirm"
-		cancel=".onDialogCancel"
+		cancel=".onSelectDialogCancel"
 		selectionChange=".onSelectionChange"
 		items="{
 			path: 'jobApplicants>/activeDialogItems'
